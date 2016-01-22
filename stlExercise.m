@@ -31,8 +31,8 @@ maxIter = 400;
 %  change it.
 
 % Load MNIST database files
-mnistData   = loadMNISTImages('mnist/train-images-idx3-ubyte');
-mnistLabels = loadMNISTLabels('mnist/train-labels-idx1-ubyte');
+mnistData   = loadMNISTImages('train-images-idx3-ubyte');
+mnistLabels = loadMNISTLabels('train-labels-idx1-ubyte');
 
 % Set Unlabeled Set (All Images)
 
@@ -69,7 +69,18 @@ theta = initializeParameters(hiddenSize, inputSize);
 %  Find opttheta by running the sparse autoencoder on
 %  unlabeledTrainingImages
 
-opttheta = theta; 
+addpath minFunc/
+options.Method = 'lbfgs';
+options.maxIter = maxIter;
+options.display = 'on';
+
+[opttheta, cost] = minFunc( @(p) sparseAutoencoderCost(p, ...
+                                   inputSize, hiddenSize, ...
+                                   lambda, sparsityParam, ...
+                                   beta, unlabeledData), ...
+                              theta, options);
+
+% opttheta = theta; 
 
 
 

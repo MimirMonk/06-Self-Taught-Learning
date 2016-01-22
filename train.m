@@ -28,7 +28,7 @@ beta = 3;            % weight of sparsity penalty term
 %  After implementing sampleIMAGES, the display_network command should
 %  display a random sample of 200 patches from the dataset
 
-numpatches = 10000;
+numpatches = 60000;
 images = loadMNISTImages('train-images-idx3-ubyte');
 patches = images(:,1:numpatches);
 display_network(patches(:,randi(size(patches,2),200,1)),8);
