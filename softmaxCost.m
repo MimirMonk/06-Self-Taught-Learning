@@ -29,9 +29,9 @@ ez = exp(z);
 ezsum = sum(ez,1);
 
 rows = labels;
-cols = (1:numCases)';
+cols = 1:numCases;
 idx = sub2ind(size(z), rows, cols);
-ezj = ez(idx)';
+ezj = ez(idx);
 
 J_xy = log(ezj ./ ezsum);
 cost = -sum(J_xy,2) / numCases + lambda/2*sum(theta(:).^2);

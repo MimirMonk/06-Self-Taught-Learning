@@ -121,12 +121,17 @@ softmaxModel = struct;
 % You need to compute softmaxModel using softmaxTrain on trainFeatures and
 % trainLabels
 
+lambda2 = 1e-4;
+options.maxIter = 100;
+softmaxModel = softmaxTrain(hiddenSize, numLabels, lambda2, ...
+                            trainFeatures, trainLabels, options);
+
+softmaxModel2 = softmaxTrain(inputSize+hiddenSize, numLabels, lambda2, ...
+                            [trainData;trainFeatures], trainLabels, options);
 
 
-
-
-
-
+softmaxModel3 = softmaxTrain(inputSize, numLabels, lambda2, ...
+                            trainData, trainLabels, options);
 
 
 
@@ -141,12 +146,12 @@ softmaxModel = struct;
 % and softmaxModel
 
 
+[pred] = softmaxPredict(softmaxModel, testFeatures);
 
 
+[pred2] = softmaxPredict(softmaxModel2, [testData;testFeatures]);
 
-
-
-
+[pred3] = softmaxPredict(softmaxModel3, testData);
 
 
 
@@ -158,6 +163,10 @@ softmaxModel = struct;
 
 % Classification Score
 fprintf('Test Accuracy: %f%%\n', 100*mean(pred(:) == testLabels(:)));
+
+fprintf('Test 2 Accuracy: %f%%\n', 100*mean(pred2(:) == testLabels(:)));
+
+fprintf('Test 3 Accuracy: %f%%\n', 100*mean(pred3(:) == testLabels(:)));
 
 % (note that we shift the labels by 1, so that digit 0 now corresponds to
 %  label 1)
